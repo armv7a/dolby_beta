@@ -198,11 +198,11 @@ public class SettingHelper {
 
         settingMap.put(master_key, sharedPreferences.getBoolean(master_key, true));
         settingMap.put(dex_key, sharedPreferences.getBoolean(dex_key, true));
-        settingMap.put(warn_key, sharedPreferences.getBoolean(warn_key, true));
-        settingMap.put(black_key, sharedPreferences.getBoolean(black_key, true));
+        settingMap.put(warn_key, sharedPreferences.getBoolean(warn_key, false));
+        settingMap.put(black_key, sharedPreferences.getBoolean(black_key, false));
         settingMap.put(listen_key, sharedPreferences.getBoolean(listen_key, false));
         settingMap.put(fix_comment_key, sharedPreferences.getBoolean(fix_comment_key, false));
-        settingMap.put(update_key, sharedPreferences.getBoolean(update_key, true));
+        settingMap.put(update_key, sharedPreferences.getBoolean(update_key, false));
         settingMap.put(sign_key, sharedPreferences.getBoolean(sign_key, false));
         settingMap.put(sign_song_key, sharedPreferences.getBoolean(sign_song_key, false));
 
@@ -212,7 +212,7 @@ public class SettingHelper {
         settingMap.put(proxy_flac_key, sharedPreferences.getBoolean(proxy_flac_key, false));
         settingMap.put(proxy_gray_key, sharedPreferences.getBoolean(proxy_gray_key, false));
 
-        settingMap.put(beauty_night_mode_key, sharedPreferences.getBoolean(beauty_night_mode_key, false));
+        settingMap.put(beauty_night_mode_key, sharedPreferences.getBoolean(beauty_night_mode_key, true));
         settingMap.put(beauty_tab_hide_key, sharedPreferences.getBoolean(beauty_tab_hide_key, false));
         settingMap.put(beauty_bubble_hide_key, sharedPreferences.getBoolean(beauty_bubble_hide_key, false));
         settingMap.put(beauty_banner_hide_key, sharedPreferences.getBoolean(beauty_banner_hide_key, false));
