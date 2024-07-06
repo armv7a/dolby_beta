@@ -5,5 +5,6 @@
 
     <string-array name="package_scope">
         <item>com.netease.cloudmusic</item>
+        <item>com.hihonor.cloudmusic</item>
     </string-array>
 </resources>
