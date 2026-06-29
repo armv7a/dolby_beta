@@ -208,7 +208,7 @@ public class SettingHook {
         dialogRoot.addView(new AboutView(context));
         new AlertDialog.Builder(context)
                 .setView(scrollView)
-                .setCancelable(false)
+                .setCancelable(true)
                 .setPositiveButton("确定", (dialogInterface, i) -> refresh())
                 .setNegativeButton("重启网易云", (dialogInterface, i) -> restartApplication(context)).show();
     }
