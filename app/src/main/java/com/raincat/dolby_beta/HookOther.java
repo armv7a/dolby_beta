@@ -5,35 +5,17 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Build;
-import android.os.Environment;
 
 import com.raincat.dolby_beta.helper.ClassHelper;
 import com.raincat.dolby_beta.helper.ExtraHelper;
-import com.raincat.dolby_beta.helper.FileHelper;
 import com.raincat.dolby_beta.helper.NotificationHelper;
 import com.raincat.dolby_beta.helper.SettingHelper;
-import com.raincat.dolby_beta.hook.AdAndUpdateHook;
-import com.raincat.dolby_beta.hook.AutoSignInHook;
-import com.raincat.dolby_beta.hook.BlackHook;
 import com.raincat.dolby_beta.hook.CdnHook;
-import com.raincat.dolby_beta.hook.CommentHotClickHook;
-import com.raincat.dolby_beta.hook.DownloadMD5Hook;
 import com.raincat.dolby_beta.hook.EAPIHook;
 import com.raincat.dolby_beta.hook.GrayHook;
-import com.raincat.dolby_beta.hook.HideBannerHook;
-import com.raincat.dolby_beta.hook.HideBubbleHook;
-import com.raincat.dolby_beta.hook.HideSidebarHook;
-import com.raincat.dolby_beta.hook.HideTabHook;
-import com.raincat.dolby_beta.hook.InternalDialogHook;
-import com.raincat.dolby_beta.hook.MagiskFixHook;
-import com.raincat.dolby_beta.hook.PlayerActivityHook;
 import com.raincat.dolby_beta.hook.ProxyHook;
 import com.raincat.dolby_beta.hook.SettingHook;
-import com.raincat.dolby_beta.hook.UserProfileHook;
 import com.raincat.dolby_beta.utils.Tools;
-
-import java.io.File;
-import java.io.IOException;
 
 import de.robv.android.xposed.XC_MethodHook;
 import de.robv.android.xposed.XposedBridge;
@@ -82,41 +64,12 @@ public class HookOther {
                                 return;
                             //音源代理
                             new ProxyHook(context, false);
-                            //黑胶
-                            if (SettingHelper.getInstance().isEnable(SettingHelper.black_key)) {
-                                new BlackHook(context, versionCode);
-                                deleteAdAndTinker();
-                            }
                             //不变灰
                             new GrayHook(context);
-                            //自动签到
-                            new AutoSignInHook(context, versionCode);
-                            //去广告与去升级
-                            new AdAndUpdateHook(context, versionCode);
-                            //修复magisk冲突导致的无法读写外置sd卡
-                            new MagiskFixHook(context);
-                            //去掉内测与听歌识曲弹窗
-                            new InternalDialogHook(context, versionCode);
-//                            new TestHook(context);
+
                             ClassHelper.getCacheClassList(context, versionCode, () -> {
-                                //获取账号信息
-                                new UserProfileHook(context);
                                 //网络访问
                                 new EAPIHook(context);
-                                //下载MD5校验
-                                new DownloadMD5Hook(context);
-                                //精简tab
-                                new HideTabHook(context, versionCode);
-                                //精简侧边栏
-                                new HideSidebarHook(context, versionCode);
-                                //移除Banner
-                                new HideBannerHook(context, versionCode);
-                                //隐藏小红点
-                                new HideBubbleHook(context);
-                                //打开评论后优先显示最热评论
-                                new CommentHotClickHook(context);
-                                //黑胶停转，隐藏K歌按钮
-                                new PlayerActivityHook(context, versionCode);
                                 new CdnHook(context, versionCode);
 
                                 mainProcessInit = true;
@@ -161,29 +114,5 @@ public class HookOther {
                         }
                     }
                 });
-    }
-
-    private void deleteAdAndTinker() throws IOException {
-        //广告缓存路径
-        String CACHE_PATH3 = Environment.getExternalStorageDirectory() + "/netease/cloudmusic/lite/Ad";
-        if(PACKAGE_NAME.equals("com.hihonor.cloudmusic"))
-        {
-            CACHE_PATH3 = Environment.getExternalStorageDirectory() + "/hihonor/cloudmusic/Ad";
-        }
-        String CACHE_PATH4 = Environment.getExternalStorageDirectory() + "/Android/data/"+PACKAGE_NAME+"cache/Ad";
-        String TINKER_PATH = "data/data/" + PACKAGE_NAME + "/tinker";
-
-        FileHelper.deleteDirectory(CACHE_PATH3);
-        FileHelper.deleteDirectory(CACHE_PATH4);
-
-        File tinkerFile = new File(TINKER_PATH);
-        if (tinkerFile.exists() && tinkerFile.isDirectory())
-            FileHelper.deleteDirectory(TINKER_PATH);
-        if (!tinkerFile.exists())
-            tinkerFile.createNewFile();
-
-        String command = "chmod 000 " + tinkerFile.getAbsolutePath();
-        Runtime runtime = Runtime.getRuntime();
-        runtime.exec(command);
     }
 }

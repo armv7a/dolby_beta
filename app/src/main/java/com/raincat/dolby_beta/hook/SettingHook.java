@@ -18,50 +18,20 @@ import android.widget.TextView;
 
 import com.raincat.dolby_beta.helper.ExtraHelper;
 import com.raincat.dolby_beta.helper.SettingHelper;
-import com.raincat.dolby_beta.model.SidebarEnum;
 import com.raincat.dolby_beta.utils.Tools;
 import com.raincat.dolby_beta.view.BaseDialogInputItem;
 import com.raincat.dolby_beta.view.BaseDialogItem;
-import com.raincat.dolby_beta.view.beauty.BeautyBannerHideView;
-import com.raincat.dolby_beta.view.beauty.BeautyBlackHideView;
-import com.raincat.dolby_beta.view.beauty.BeautyBubbleHideView;
-import com.raincat.dolby_beta.view.beauty.BeautyCommentHotView;
-import com.raincat.dolby_beta.view.beauty.BeautyKSongHideView;
-import com.raincat.dolby_beta.view.beauty.BeautyNightModeView;
-import com.raincat.dolby_beta.view.beauty.BeautyRotationView;
-import com.raincat.dolby_beta.view.beauty.BeautySidebarHideItem;
-import com.raincat.dolby_beta.view.beauty.BeautySidebarHideView;
-import com.raincat.dolby_beta.view.beauty.BeautyTabHideView;
-import com.raincat.dolby_beta.view.beauty.BeautyTitleView;
-import com.raincat.dolby_beta.view.beauty.PlayerBackgroundView;
-import com.raincat.dolby_beta.view.beauty.background.BackgroundMasterView;
-import com.raincat.dolby_beta.view.beauty.background.BackgroundTitleView;
-import com.raincat.dolby_beta.view.beauty.background.BackgroundPictureUrlView;
-import com.raincat.dolby_beta.view.beauty.background.BackgroundBlurRadiusView;
 import com.raincat.dolby_beta.view.proxy.*;
 import com.raincat.dolby_beta.view.proxy.configuration.*;
 import com.raincat.dolby_beta.view.setting.AboutView;
-import com.raincat.dolby_beta.view.setting.BeautyView;
-import com.raincat.dolby_beta.view.setting.BlackView;
-import com.raincat.dolby_beta.view.setting.DexView;
-import com.raincat.dolby_beta.view.setting.FixCommentView;
 import com.raincat.dolby_beta.view.setting.MasterView;
 import com.raincat.dolby_beta.view.setting.ProxyView;
 import com.raincat.dolby_beta.view.setting.ResetModuleView;
-import com.raincat.dolby_beta.view.setting.SignSongDailyView;
-import com.raincat.dolby_beta.view.setting.SignSongSelfView;
-import com.raincat.dolby_beta.view.setting.SignView;
 import com.raincat.dolby_beta.view.setting.TitleView;
-import com.raincat.dolby_beta.view.setting.UpdateView;
-import com.raincat.dolby_beta.view.setting.ListenView;
-import com.raincat.dolby_beta.view.setting.WarnView;
 
 
 import java.lang.reflect.Field;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
 
 import de.robv.android.xposed.XC_MethodHook;
 import de.robv.android.xposed.XposedHelpers;
@@ -81,7 +51,7 @@ public class SettingHook {
     private String SettingActivity;
     private String switchViewName = "";
     private TextView titleView, subView;
-    private LinearLayout dialogRoot, dialogProxyRoot, dialogBeautyRoot, dialogSidebarRoot;
+    private LinearLayout dialogRoot, dialogProxyRoot;
 
     private BroadcastReceiver broadcastReceiver;
 
@@ -190,9 +160,6 @@ public class SettingHook {
         IntentFilter intentFilter = new IntentFilter();
         intentFilter.addAction(SettingHelper.refresh_setting);
         intentFilter.addAction(SettingHelper.proxy_setting);
-        intentFilter.addAction(SettingHelper.beauty_setting);
-        intentFilter.addAction(SettingHelper.sidebar_setting);
-        intentFilter.addAction(SettingHelper.background_setting);
         intentFilter.addAction(SettingHelper.proxy_configuration_setting);
         broadcastReceiver = new BroadcastReceiver() {
             @Override
@@ -209,19 +176,8 @@ public class SettingHook {
                             else if (dialogProxyRoot.getChildAt(i) instanceof BaseDialogInputItem)
                                 ((BaseDialogInputItem) dialogProxyRoot.getChildAt(i)).refresh();
                         }
-                    if (dialogBeautyRoot != null)
-                        for (int i = 0; i < dialogBeautyRoot.getChildCount(); i++) {
-                            if (dialogBeautyRoot.getChildAt(i) instanceof BaseDialogItem)
-                                ((BaseDialogItem) dialogBeautyRoot.getChildAt(i)).refresh();
-                        }
                 } else if (intent.getAction().equals(SettingHelper.proxy_setting)) {
                     showProxyDialog(context);
-                } else if (intent.getAction().equals(SettingHelper.beauty_setting)) {
-                    showBeautyDialog(context);
-                } else if (intent.getAction().equals(SettingHelper.sidebar_setting)) {
-                    showSidebarDialog(context);
-                } else if (intent.getAction().equals(SettingHelper.background_setting)) {
-                    showPlayerBackgroundDialog(context);
                 } else if (intent.getAction().equals(SettingHelper.proxy_configuration_setting)) {
                     showProxyConfigurationDialog(context);
                 }
@@ -239,44 +195,14 @@ public class SettingHook {
         scrollView.addView(dialogRoot);
 
         MasterView masterView = new MasterView(context);
-        DexView dexView = new DexView(context);
-        dexView.setBaseOnView(masterView);
-        WarnView warnView = new WarnView(context);
-        warnView.setBaseOnView(masterView);
-        BlackView blackView = new BlackView(context);
-        blackView.setBaseOnView(masterView);
-        ListenView listenView = new ListenView(context);
-        listenView.setBaseOnView(masterView);
-        FixCommentView fixCommentView = new FixCommentView(context);
-        fixCommentView.setBaseOnView(masterView);
-        UpdateView updateView = new UpdateView(context);
-        updateView.setBaseOnView(masterView);
-        SignView signView = new SignView(context);
-        signView.setBaseOnView(masterView);
-        SignSongDailyView signSongDailyView = new SignSongDailyView(context);
-        signSongDailyView.setBaseOnView(masterView);
-        SignSongSelfView signSongSelfView = new SignSongSelfView(context);
-        signSongSelfView.setBaseOnView(masterView);
         ProxyView proxyView = new ProxyView(context);
         proxyView.setBaseOnView(masterView);
-        BeautyView beautyView = new BeautyView(context);
-        beautyView.setBaseOnView(masterView);
         ResetModuleView resetModuleView = new ResetModuleView(context);
 
 
         dialogRoot.addView(new TitleView(context));
         dialogRoot.addView(masterView);
-        dialogRoot.addView(dexView);
-        dialogRoot.addView(warnView);
-        dialogRoot.addView(blackView);
-        dialogRoot.addView(listenView);
-        dialogRoot.addView(fixCommentView);
-        dialogRoot.addView(updateView);
-        dialogRoot.addView(signView);
-        dialogRoot.addView(signSongDailyView);
-        dialogRoot.addView(signSongSelfView);
         dialogRoot.addView(proxyView);
-        dialogRoot.addView(beautyView);
         dialogRoot.addView(resetModuleView);
 
         dialogRoot.addView(new AboutView(context));
@@ -326,7 +252,6 @@ public class SettingHook {
         ProxyHttpView proxyHttpView = new ProxyHttpView(context);
         ProxyPortView proxyPortView = new ProxyPortView(context);
         ProxyOriginalView proxyOriginalView = new ProxyOriginalView(context);
-       // ProxyKuwoView proxykuwoView = new ProxyKuwoView(context);
         ProxyQqView proxyqqView = new ProxyQqView(context);
         ProxyMiguView proxymiguView = new ProxyMiguView(context);
 
@@ -334,74 +259,13 @@ public class SettingHook {
         dialogProxyRoot.addView(proxyHttpView);
         dialogProxyRoot.addView(proxyPortView);
         dialogProxyRoot.addView(proxyOriginalView);
-       // dialogProxyRoot.addView(proxykuwoView);
         dialogProxyRoot.addView(proxyqqView);
-       // dialogProxyRoot.addView(proxymiguView);
+        dialogProxyRoot.addView(proxymiguView);
         new AlertDialog.Builder(context)
                 .setView(dialogProxyRoot)
                 .setCancelable(true)
                 .setPositiveButton("仅保存", (dialogInterface, i) -> refresh())
                 .setNegativeButton("保存并重启", (dialogInterface, i) -> restartApplication(context)).show();
-    }
-    private void showPlayerBackgroundDialog(final Context context) {
-        dialogBeautyRoot = new BaseDialogItem(context);
-        dialogBeautyRoot.setOrientation(LinearLayout.VERTICAL);
-        BackgroundMasterView backgroundMasterView = new BackgroundMasterView(context);
-        BackgroundPictureUrlView backgroundPictureUrlView = new BackgroundPictureUrlView(context);
-        BackgroundBlurRadiusView backgroundBlurRadiusView = new BackgroundBlurRadiusView(context);
-
-        dialogBeautyRoot.addView(new BackgroundTitleView(context));
-        dialogBeautyRoot.addView(backgroundMasterView);
-        dialogBeautyRoot.addView(backgroundPictureUrlView);
-        dialogBeautyRoot.addView(backgroundBlurRadiusView);
-
-        new AlertDialog.Builder(context)
-                .setView(dialogBeautyRoot)
-                .setCancelable(true)
-                .setPositiveButton("仅保存", (dialogInterface, i) -> refresh())
-                .setNegativeButton("保存并重启", (dialogInterface, i) -> restartApplication(context)).show();
-    }
-    private void showBeautyDialog(final Context context) {
-        dialogBeautyRoot = new BaseDialogItem(context);
-        dialogBeautyRoot.setOrientation(LinearLayout.VERTICAL);
-        dialogBeautyRoot.addView(new BeautyTitleView(context));
-        dialogBeautyRoot.addView(new BeautyNightModeView(context));
-        dialogBeautyRoot.addView(new BeautyTabHideView(context));
-        dialogBeautyRoot.addView(new BeautyBannerHideView(context));
-        dialogBeautyRoot.addView(new BeautyBubbleHideView(context));
-        dialogBeautyRoot.addView(new BeautyKSongHideView(context));
-        dialogBeautyRoot.addView(new BeautyBlackHideView(context));
-        dialogBeautyRoot.addView(new BeautyRotationView(context));
-        dialogBeautyRoot.addView(new BeautyCommentHotView(context));
-        dialogBeautyRoot.addView(new PlayerBackgroundView(context));
-        dialogBeautyRoot.addView(new BeautySidebarHideView(context));
-        new AlertDialog.Builder(context)
-                .setView(dialogBeautyRoot)
-                .setCancelable(true)
-                .setPositiveButton("仅保存", (dialogInterface, i) -> refresh())
-                .setNegativeButton("保存并重启", (dialogInterface, i) -> restartApplication(context)).show();
-    }
-
-    private void showSidebarDialog(final Context context) {
-        dialogSidebarRoot = new BaseDialogItem(context);
-        dialogSidebarRoot.setOrientation(LinearLayout.VERTICAL);
-        ScrollView scrollView = new ScrollView(context);
-        scrollView.setOverScrollMode(ScrollView.OVER_SCROLL_NEVER);
-        scrollView.setVerticalScrollBarEnabled(false);
-        scrollView.addView(dialogSidebarRoot);
-
-        final LinkedHashMap<String, String> sidebarMap = SidebarEnum.getSidebarEnum();
-        final HashMap<String, Boolean> sidebarSettingMap = SettingHelper.getInstance().getSidebarSetting(sidebarMap);
-        for (Map.Entry<String, String> entry : sidebarMap.entrySet()) {
-            BeautySidebarHideItem item = new BeautySidebarHideItem(context);
-            item.initData(sidebarMap, sidebarSettingMap, entry.getKey());
-            dialogSidebarRoot.addView(item);
-        }
-
-        new AlertDialog.Builder(context)
-                .setView(scrollView)
-                .setCancelable(true)
-                .setPositiveButton("确定", (dialogInterface, i) -> refresh()).show();
     }
 
     private void restartApplication(Context context) {
