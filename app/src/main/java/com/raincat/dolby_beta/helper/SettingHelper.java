@@ -54,10 +54,6 @@ public class SettingHelper {
     public static final String http_proxy_title = "代理服务器";
     public static final String http_proxy_default = "127.0.0.1";
 
-    public static final String kuwo_cookie_key = "β_kuwo_cookie_key";
-    public static final String kuwo_cookie_title = "酷我Cookie";
-    public static final String kuwo_cookie_default = "Hm_Iuvt_cdb524f42f0ce19b169b8072123a4727=CQXkhzXjGD6MFQrPTBxEpSmZXF78wP8e; Secret=1d0d220792feb563f97fdb0de2b7ebad69f781cdcdbe51d1203a3be9d3e92f5e04b00a24";
-
     public static final String qq_cookie_key = "β_qq_cookie_key";
     public static final String qq_cookie_title = "QQCookie";
     public static final String qq_cookie_default = "uin=<your_uin>; qm_keyst=<your_qm_keyst>";
@@ -163,13 +159,6 @@ public class SettingHelper {
 
     public String getHttpProxy() {
         return sharedPreferences.getString(SettingHelper.http_proxy_key, SettingHelper.http_proxy_default);
-    }
-    public String getKuwoCookie() {
-        return sharedPreferences.getString(SettingHelper.kuwo_cookie_key, SettingHelper.kuwo_cookie_default);
-    }
-    public void setKuwoCookie(String cookie) {
-        if (!TextUtils.isEmpty(cookie))
-            sharedPreferences.edit().putString(SettingHelper.kuwo_cookie_key, cookie).apply();
     }
     public String getQqCookie() {
         return sharedPreferences.getString(SettingHelper.qq_cookie_key, SettingHelper.qq_cookie_default);

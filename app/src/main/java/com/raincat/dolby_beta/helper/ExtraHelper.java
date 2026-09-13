@@ -21,11 +21,6 @@ public class ExtraHelper {
     //APP版本号
     public static final String APP_VERSION = "app_version";
 
-    //用户id
-    public static final String USER_ID = "user_id";
-    //cookie
-    public static final String COOKIE = "cookie";
-
     //初始化数据库
     public static void init(Context context) {
         ExtraDao.init(context);
@@ -37,13 +32,5 @@ public class ExtraHelper {
 
     public static void setExtraDate(String key, Object value) {
         ExtraDao.getInstance().saveExtra(key, value.toString());
-    }
-
-    /**
-     * 清除当前用户的数据
-     */
-    public static void cleanUserData() {
-        setExtraDate(COOKIE, "-1");
-        setExtraDate(USER_ID, "-1");
     }
 }

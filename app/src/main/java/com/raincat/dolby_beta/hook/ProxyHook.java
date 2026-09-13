@@ -1,8 +1,6 @@
 package com.raincat.dolby_beta.hook;
 
 import android.content.Context;
-import android.os.Bundle;
-
 
 import com.raincat.dolby_beta.helper.ExtraHelper;
 import com.raincat.dolby_beta.helper.ScriptHelper;
@@ -22,7 +20,6 @@ import de.robv.android.xposed.XposedBridge;
 import de.robv.android.xposed.XposedHelpers;
 
 import static de.robv.android.xposed.XposedBridge.hookAllConstructors;
-import static de.robv.android.xposed.XposedHelpers.findAndHookMethod;
 import static de.robv.android.xposed.XposedHelpers.findClassIfExists;
 
 /**

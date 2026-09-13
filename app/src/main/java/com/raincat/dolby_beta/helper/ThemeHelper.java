@@ -23,10 +23,6 @@ public class ThemeHelper {
         isDark = luminance(textColor) > 0.5f;
     }
 
-    public static boolean isDarkMode() {
-        return isDark;
-    }
-
     public static int getPrimaryTextColor() {
         return isDark ? Color.WHITE : Color.BLACK;
     }

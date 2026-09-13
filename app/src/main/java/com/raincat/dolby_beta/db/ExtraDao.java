@@ -62,26 +62,4 @@ public class ExtraDao {
         db.close();
         return extra;
     }
-
-    /**
-     * 删除一个人的某条额外记录
-     */
-    public synchronized void deleteExtra(String key) {
-        SQLiteDatabase db = dbHelper.getWritableDatabase();
-        if (db.isOpen()) {
-            db.delete(TABLE_NAME, EXTRA_KEY + " = ? ", new String[]{key});
-        }
-        db.close();
-    }
-
-    /**
-     * 删除所有额外记录
-     */
-    public synchronized void deleteAllExtra() {
-        SQLiteDatabase db = dbHelper.getWritableDatabase();
-        if (db.isOpen()) {
-            db.delete(TABLE_NAME, null, null);
-        }
-        db.close();
-    }
 }

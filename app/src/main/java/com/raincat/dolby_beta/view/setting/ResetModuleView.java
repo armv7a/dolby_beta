@@ -5,7 +5,6 @@ import android.util.AttributeSet;
 import android.widget.Toast;
 
 import com.raincat.dolby_beta.helper.SettingHelper;
-import com.raincat.dolby_beta.hook.SettingHook;
 import com.raincat.dolby_beta.view.BaseDialogItem;
 
 /**

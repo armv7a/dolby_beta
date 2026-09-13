@@ -11,8 +11,6 @@ import com.stericson.RootShell.execution.Command;
 import com.stericson.RootTools.RootTools;
 
 import java.io.IOException;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.concurrent.TimeoutException;
 
 /**
@@ -60,18 +58,6 @@ public class Tools {
     public static int dp2px(Context context, float dpValue) {
         final float scale = context.getResources().getDisplayMetrics().density;
         return (int) (dpValue * scale + 0.5f);
-    }
-
-    /**
-     * 获取今天0点的时间戳
-     */
-    public static long getTodayStartTime() {
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTime(new Date());
-        calendar.set(Calendar.HOUR_OF_DAY, 0);
-        calendar.set(Calendar.MINUTE, 0);
-        calendar.set(Calendar.SECOND, 0);
-        return calendar.getTime().getTime();
     }
 
     /**

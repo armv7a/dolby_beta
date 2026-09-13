@@ -148,9 +148,7 @@ public class SettingHook {
     @SuppressLint("SetTextI18n")
     private void refresh() {
         titleView.setText("杜比大喇叭β");
-        if (ExtraHelper.getExtraDate(ExtraHelper.USER_ID).equals("-1")) {
-            subView.setText("（USERID获取失败）");
-        } else if (!SettingHelper.getInstance().getSetting(SettingHelper.master_key))
+        if (!SettingHelper.getInstance().getSetting(SettingHelper.master_key))
             subView.setText("（已关闭）");
         else if (ExtraHelper.getExtraDate(ExtraHelper.SCRIPT_STATUS).equals("1"))
             subView.setText("（UnblockNeteaseMusic正在运行）");

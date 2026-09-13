@@ -80,13 +80,4 @@ public class NotificationHelper {
         Notification notification = new Notification.BigTextStyle(builder).bigText(content).build();
         mNotificationManager.notify(appId, notification);
     }
-
-    /**
-     * 取消该通知
-     *
-     * @param appId 通知标识符
-     */
-    public void cancelNotification(int appId) {
-        mNotificationManager.cancel(appId);
-    }
 }

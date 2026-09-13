@@ -16,16 +16,11 @@
 #   public *;
 #}
 
--keep class net.androidwing.hotxposed.* {*;}
 -keep class com.raincat.dolby_beta.MainHook
 -keep class com.raincat.dolby_beta.helper.ScriptHelper
 
 # 跳过所有Json实体类
 -keep public class **.*model*.** {*;}
-
--keep class com.raincat.dolby_beta.HookerDispatcher* {
-  void dispatch(*);
-}
 
 -keep public class android.app.**
 -keep class com.gyf.barlibrary.* {*;}
