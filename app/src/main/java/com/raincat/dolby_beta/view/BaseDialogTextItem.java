@@ -1,10 +1,10 @@
 package com.raincat.dolby_beta.view;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.util.AttributeSet;
 import android.util.TypedValue;
 
+import com.raincat.dolby_beta.helper.ThemeHelper;
 import com.raincat.dolby_beta.utils.Tools;
 
 import androidx.appcompat.widget.AppCompatTextView;
@@ -38,7 +38,7 @@ public class BaseDialogTextItem extends AppCompatTextView {
         int padding = Tools.dp2px(context, 10);
         setPadding(padding, 8, padding, 0);
         setTextSize(TypedValue.COMPLEX_UNIT_SP, 12);
-        setTextColor(Color.BLACK);
+        setTextColor(ThemeHelper.getPrimaryTextColor());
         setVisibility(GONE);
     }
 }

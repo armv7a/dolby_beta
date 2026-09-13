@@ -1,7 +1,6 @@
 package com.raincat.dolby_beta.view;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.util.TypedValue;
@@ -11,6 +10,7 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.raincat.dolby_beta.helper.ThemeHelper;
 import com.raincat.dolby_beta.utils.Tools;
 
 /**
@@ -63,16 +63,16 @@ public class BaseDialogInputItem extends LinearLayout {
 
         titleView = new TextView(context);
         titleView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 15);
-        titleView.setTextColor(Color.BLACK);
+        titleView.setTextColor(ThemeHelper.getPrimaryTextColor());
         editView = new EditText(context);
         editView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 14);
-        editView.setTextColor(Color.BLACK);
+        editView.setTextColor(ThemeHelper.getPrimaryTextColor());
         editView.setLayoutParams(new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
         linearLayout.addView(titleView);
         linearLayout.addView(editView);
         defaultView = new TextView(context);
         defaultView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 12);
-        defaultView.setTextColor(Color.DKGRAY);
+        defaultView.setTextColor(ThemeHelper.getSecondaryTextColor());
         defaultView.setText("恢复默认");
         addView(defaultView);
     }
@@ -82,13 +82,13 @@ public class BaseDialogInputItem extends LinearLayout {
         super.setEnabled(enabled);
 
         if (!enabled) {
-            titleView.setTextColor(Color.LTGRAY);
-            editView.setTextColor(Color.LTGRAY);
-            defaultView.setTextColor(Color.LTGRAY);
+            titleView.setTextColor(ThemeHelper.getDisabledTextColor());
+            editView.setTextColor(ThemeHelper.getDisabledTextColor());
+            defaultView.setTextColor(ThemeHelper.getDisabledTextColor());
         } else {
-            titleView.setTextColor(Color.BLACK);
-            editView.setTextColor(Color.BLACK);
-            defaultView.setTextColor(Color.DKGRAY);
+            titleView.setTextColor(ThemeHelper.getPrimaryTextColor());
+            editView.setTextColor(ThemeHelper.getPrimaryTextColor());
+            defaultView.setTextColor(ThemeHelper.getSecondaryTextColor());
         }
         defaultView.setEnabled(enabled);
         editView.setEnabled(enabled);

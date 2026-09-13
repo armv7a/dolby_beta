@@ -18,6 +18,7 @@ import android.widget.TextView;
 
 import com.raincat.dolby_beta.helper.ExtraHelper;
 import com.raincat.dolby_beta.helper.SettingHelper;
+import com.raincat.dolby_beta.helper.ThemeHelper;
 import com.raincat.dolby_beta.utils.Tools;
 import com.raincat.dolby_beta.view.BaseDialogInputItem;
 import com.raincat.dolby_beta.view.BaseDialogItem;
@@ -133,6 +134,7 @@ public class SettingHook {
         }
 
         if (originalText != null) {
+            ThemeHelper.updateDarkMode(originalText.getTextColors().getDefaultColor());
             titleView.setTextColor(originalText.getTextColors());
             titleView.setTextSize(TypedValue.COMPLEX_UNIT_PX, originalText.getTextSize());
             titleView.setPadding(originalText.getPaddingLeft() == 0 ? Tools.dp2px(context, 10) : originalText.getPaddingLeft(), 0, 0, 0);
@@ -187,26 +189,27 @@ public class SettingHook {
     }
 
     private void showSettingDialog(final Context context) {
-        dialogRoot = new BaseDialogItem(context);
+        final Context themedContext = ThemeHelper.wrapDialogTheme(context);
+        dialogRoot = new BaseDialogItem(themedContext);
         dialogRoot.setOrientation(LinearLayout.VERTICAL);
-        ScrollView scrollView = new ScrollView(context);
+        ScrollView scrollView = new ScrollView(themedContext);
         scrollView.setOverScrollMode(ScrollView.OVER_SCROLL_NEVER);
         scrollView.setVerticalScrollBarEnabled(false);
         scrollView.addView(dialogRoot);
 
-        MasterView masterView = new MasterView(context);
-        ProxyView proxyView = new ProxyView(context);
+        MasterView masterView = new MasterView(themedContext);
+        ProxyView proxyView = new ProxyView(themedContext);
         proxyView.setBaseOnView(masterView);
-        ResetModuleView resetModuleView = new ResetModuleView(context);
+        ResetModuleView resetModuleView = new ResetModuleView(themedContext);
 
 
-        dialogRoot.addView(new TitleView(context));
+        dialogRoot.addView(new TitleView(themedContext));
         dialogRoot.addView(masterView);
         dialogRoot.addView(proxyView);
         dialogRoot.addView(resetModuleView);
 
-        dialogRoot.addView(new AboutView(context));
-        new AlertDialog.Builder(context)
+        dialogRoot.addView(new AboutView(themedContext));
+        new AlertDialog.Builder(themedContext)
                 .setView(scrollView)
                 .setCancelable(true)
                 .setPositiveButton("确定", (dialogInterface, i) -> refresh())
@@ -214,24 +217,25 @@ public class SettingHook {
     }
 
     private void showProxyDialog(final Context context) {
-        dialogProxyRoot = new BaseDialogItem(context);
+        final Context themedContext = ThemeHelper.wrapDialogTheme(context);
+        dialogProxyRoot = new BaseDialogItem(themedContext);
         dialogProxyRoot.setOrientation(LinearLayout.VERTICAL);
-        ProxyMasterView proxyMasterView = new ProxyMasterView(context);
-        ProxyCoverView proxyCoverView = new ProxyCoverView(context);
+        ProxyMasterView proxyMasterView = new ProxyMasterView(themedContext);
+        ProxyCoverView proxyCoverView = new ProxyCoverView(themedContext);
         proxyCoverView.setBaseOnView(proxyMasterView);
-        ProxyServerView ProxyServerView = new ProxyServerView(context);
+        ProxyServerView ProxyServerView = new ProxyServerView(themedContext);
         ProxyServerView.setBaseOnView(proxyMasterView);
-        ProxyPriorityView proxyPriorityView = new ProxyPriorityView(context);
+        ProxyPriorityView proxyPriorityView = new ProxyPriorityView(themedContext);
         proxyPriorityView.setBaseOnView(proxyMasterView);
-        ProxyFlacView proxyFlacView = new ProxyFlacView(context);
+        ProxyFlacView proxyFlacView = new ProxyFlacView(themedContext);
         proxyFlacView.setBaseOnView(proxyMasterView);
-        ProxyGrayView proxyGrayView = new ProxyGrayView(context);
+        ProxyGrayView proxyGrayView = new ProxyGrayView(themedContext);
         proxyGrayView.setBaseOnView(proxyMasterView);
-        ProxyConfigurationView proxyConfigurationView = new ProxyConfigurationView(context);
+        ProxyConfigurationView proxyConfigurationView = new ProxyConfigurationView(themedContext);
         proxyConfigurationView.setBaseOnView(proxyMasterView);
 
 
-        dialogProxyRoot.addView(new ProxyTitleView(context));
+        dialogProxyRoot.addView(new ProxyTitleView(themedContext));
         dialogProxyRoot.addView(proxyMasterView);
         dialogProxyRoot.addView(proxyCoverView);
         dialogProxyRoot.addView(ProxyServerView);
@@ -240,28 +244,29 @@ public class SettingHook {
         dialogProxyRoot.addView(proxyGrayView);
         dialogProxyRoot.addView(proxyConfigurationView);
 
-        new AlertDialog.Builder(context)
+        new AlertDialog.Builder(themedContext)
                 .setView(dialogProxyRoot)
                 .setCancelable(true)
                 .setPositiveButton("仅保存", (dialogInterface, i) -> refresh())
                 .setNegativeButton("保存并重启", (dialogInterface, i) -> restartApplication(context)).show();
     }
     private void showProxyConfigurationDialog(final Context context) {
-        dialogProxyRoot = new BaseDialogItem(context);
+        final Context themedContext = ThemeHelper.wrapDialogTheme(context);
+        dialogProxyRoot = new BaseDialogItem(themedContext);
         dialogProxyRoot.setOrientation(LinearLayout.VERTICAL);
-        ProxyHttpView proxyHttpView = new ProxyHttpView(context);
-        ProxyPortView proxyPortView = new ProxyPortView(context);
-        ProxyOriginalView proxyOriginalView = new ProxyOriginalView(context);
-        ProxyQqView proxyqqView = new ProxyQqView(context);
-        ProxyMiguView proxymiguView = new ProxyMiguView(context);
+        ProxyHttpView proxyHttpView = new ProxyHttpView(themedContext);
+        ProxyPortView proxyPortView = new ProxyPortView(themedContext);
+        ProxyOriginalView proxyOriginalView = new ProxyOriginalView(themedContext);
+        ProxyQqView proxyqqView = new ProxyQqView(themedContext);
+        ProxyMiguView proxymiguView = new ProxyMiguView(themedContext);
 
-        dialogProxyRoot.addView(new ProxyConfigurationTitleView(context));
+        dialogProxyRoot.addView(new ProxyConfigurationTitleView(themedContext));
         dialogProxyRoot.addView(proxyHttpView);
         dialogProxyRoot.addView(proxyPortView);
         dialogProxyRoot.addView(proxyOriginalView);
         dialogProxyRoot.addView(proxyqqView);
         dialogProxyRoot.addView(proxymiguView);
-        new AlertDialog.Builder(context)
+        new AlertDialog.Builder(themedContext)
                 .setView(dialogProxyRoot)
                 .setCancelable(true)
                 .setPositiveButton("仅保存", (dialogInterface, i) -> refresh())

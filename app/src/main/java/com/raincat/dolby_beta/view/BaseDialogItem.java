@@ -2,7 +2,6 @@ package com.raincat.dolby_beta.view;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
 import android.util.AttributeSet;
 import android.util.TypedValue;
 import android.view.Gravity;
@@ -12,6 +11,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.raincat.dolby_beta.helper.SettingHelper;
+import com.raincat.dolby_beta.helper.ThemeHelper;
 import com.raincat.dolby_beta.utils.Tools;
 
 
@@ -65,10 +65,10 @@ public class BaseDialogItem extends LinearLayout {
 
         titleView = new TextView(context);
         titleView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 15);
-        titleView.setTextColor(Color.BLACK);
+        titleView.setTextColor(ThemeHelper.getPrimaryTextColor());
         subView = new TextView(context);
         subView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 12);
-        subView.setTextColor(Color.DKGRAY);
+        subView.setTextColor(ThemeHelper.getSecondaryTextColor());
         linearLayout.addView(titleView);
         linearLayout.addView(subView);
         checkBox = new CheckBox(context);
@@ -85,11 +85,11 @@ public class BaseDialogItem extends LinearLayout {
         super.setEnabled(enabled);
 
         if (!enabled) {
-            titleView.setTextColor(Color.LTGRAY);
-            subView.setTextColor(Color.LTGRAY);
+            titleView.setTextColor(ThemeHelper.getDisabledTextColor());
+            subView.setTextColor(ThemeHelper.getDisabledTextColor());
         } else {
-            titleView.setTextColor(Color.BLACK);
-            subView.setTextColor(Color.DKGRAY);
+            titleView.setTextColor(ThemeHelper.getPrimaryTextColor());
+            subView.setTextColor(ThemeHelper.getSecondaryTextColor());
         }
         checkBox.setEnabled(enabled);
     }
